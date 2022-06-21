@@ -38,19 +38,19 @@ public class RequestHandler extends Thread{
                 log.debug("header : {}", line);
             }
 
-//            if("/product/regForm.html".equals(tokens[1])){
-//                // 상품 폼 페이지
-//            }
-//
-//            if("/product.html".equals(tokens[1])){
-//                // 상품 등록
-//            }
+            if("/product/regForm".equals(tokens[1])){
+                // 상품 폼 페이지
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + "html").toPath());
+                // 상품을 추가하는 URL 을 추가
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            }
 
-            DataOutputStream dos = new DataOutputStream(out);
-            byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1]).toPath());
-            // 상품을 추가하는 URL 을 추가
-            response200Header(dos, body.length);
-            responseBody(dos, body);
+            if("/product.html".equals(tokens[1])){
+                // 상품 등록
+            }
+
 
         } catch (IOException e) {
             log.error(e.getMessage());
