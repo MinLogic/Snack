@@ -7,7 +7,7 @@ public class RequestHandlerTest {
 
     @Test
     public void testFile(){
-        File file = new File("./webapp/index.html");
+        File file = new File("");
 
     }
 }
