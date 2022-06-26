@@ -1,10 +1,15 @@
 package com.dataworld.server;
 
+import com.dataworld.snackworld.Goods;
+import com.dataworld.snackworld.GoodsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.Socket;
+import java.net.URL;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 
 public class RequestHandler extends Thread{
@@ -24,10 +29,10 @@ public class RequestHandler extends Thread{
             //TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line = br.readLine();
+
             log.debug("request line : {}", line);
 
-            // 널 처리하는 유틸 사용하는게 더 바람직함
-            if(line == null){
+            if(line.equals(null)){
                 return;
             }
 
@@ -41,14 +46,14 @@ public class RequestHandler extends Thread{
             if("/product/regForm".equals(tokens[1])){
                 // 상품 폼 페이지
                 DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + "html").toPath());
-                // 상품을 추가하는 URL 을 추가
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
                 response200Header(dos, body.length);
                 responseBody(dos, body);
             }
 
-            if("/product.html".equals(tokens[1])){
+            if("/product".equals(tokens[1])){
                 // 상품 등록
+                GoodsList goodsList = GoodsList.getInstance();
             }
 
 
