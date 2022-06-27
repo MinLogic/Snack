@@ -6,11 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.Socket;
-import java.net.URL;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 
 public class RequestHandler extends Thread{
@@ -44,8 +40,24 @@ public class RequestHandler extends Thread{
                 log.debug("header : {}", line);
             }
 
+            StringBuilder sb = new StringBuilder();
+            if("POST".equals(tokens[0])){
 
+                while(br.ready()){
+                    line = br.readLine();
+                    log.debug("content : {}", line);
+                    sb.append(line);
+                    sb.append("&");
+                }
+            }
 
+//            if("POST".equals(tokens[0])){
+//                while(br.ready()){
+//                    char[] test = new char[100];
+//                    br.read(test,0,40);
+//                    log.debug("content : {}", String.valueOf(test));
+//                }
+//            }
             if("/product/regForm".equals(tokens[1])){
                 // 상품 폼 페이지
                 DataOutputStream dos = new DataOutputStream(out);
@@ -56,7 +68,7 @@ public class RequestHandler extends Thread{
 
             if("/product".equals(tokens[1])){
                 // 상품 등록
-                String content = br.readLine();
+                String content = sb.toString();
                 String[] contentToken = content.split("&");
 
                 String goodsName = contentToken[0].split("=")[1];
