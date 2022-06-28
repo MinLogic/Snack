@@ -4,12 +4,15 @@ import com.dataworld.snackworld.Goods;
 import com.dataworld.snackworld.GoodsList;
 import com.dataworld.snackworld.User;
 import com.dataworld.snackworld.UserList;
+import com.dataworld.util.HttpRequestUtils;
+import com.dataworld.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.Map;
 
 public class RequestHandler extends Thread{
     private Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -40,11 +43,26 @@ public class RequestHandler extends Thread{
             while(!"".equals(line)){
                 line = br.readLine();
                 log.debug("header : {}", line);
+                if(line.contains("Content-length")){
+
+                }
             }
+            // line 중에 contains content-length 해서 content-length 구하기
+            // content-length 길이로 char[] 만들기 ?? byte[] 만들기?
+            // inputstream 을 content-length 만큼 읽어서 char[] 에 넣기
+            // 해당 데이터를 byte로 변환
+            
+            // 서블릿 내용 기억해라
+            // response add Header "Set-Cookie"  ex) "logined-true"
+            // Cookie key jsessionid 를 가지고 쿠키를 던지면 해당 id를 가지고 세션이 살아있는지 죽었는지 확인
+            
+            // 정리 http 는 세션을 쿠키로 관리
+            // 서블릿 컨테이너에서 서블릿이 jsessionid 를 사용해 관리
 
             String content = "";
             if("POST".equals(tokens[0])){
-                content = postHandler(br);
+                content = br.readLine();
+//                content = postHandler(br);
             }
 
 //            if("POST".equals(tokens[0])){
@@ -54,6 +72,21 @@ public class RequestHandler extends Thread{
 //                    log.debug("content : {}", String.valueOf(test));
 //                }
 //            }
+
+            int contentLength = 0; // 나중에 위로 빼야함
+            String url = tokens[1];
+            if ("/user/create".equals(url)) {
+                String body = IOUtils.readData(br, contentLength);
+                Map<String, String> params = HttpRequestUtils.parseQueryString(body);
+                User user = new User(params.get("userId"), params.get("password"));
+                // userlist 클래스에 정의해둔 addUser 불러와서 실행
+                DataOutputStream dos = new DataOutputStream(out);
+                // redirect 를 해야함
+                // redirect는 302 헤더를 가지고 넘어가야함
+
+            } else if ("/user/regform".equals(url)) {
+
+            }
 
             String[] contentTokens;
             if("/product/regForm".equals(tokens[1])){
@@ -65,6 +98,8 @@ public class RequestHandler extends Thread{
             }
 
             if("/product".equals(tokens[1])){
+                //
+                String body = IOUtils.readData(br, contentLength);
                 // 상품 등록
                 // Map 으로 변환하는 방법 찾아보기
                 contentTokens = content.split("&");
@@ -76,10 +111,10 @@ public class RequestHandler extends Thread{
                 goodsList.addGoods(new Goods(goodsName, goodsPrice));
 
 
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp/product/regForm.html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[]  = Files.readAllBytes(new File("./src/main/webapp/product/regForm.html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
             }
 
             if("/login/loginForm".equals(tokens[1])){
@@ -137,9 +172,6 @@ public class RequestHandler extends Thread{
                 responseBody(dos, body);
             }
 
-
-
-
         } catch (IOException e) {
             log.error(e.getMessage());
         }
@@ -151,6 +183,18 @@ public class RequestHandler extends Thread{
             dos.writeBytes("HTTP/1.1 200 OK \r\n");
             dos.writeBytes("Content-Type: text/html; charset=utf-8 \r\n");
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
+            dos.writeBytes("Sek-Cookie: logined=true; Path=/ \r\n"); // 쿠키담는거
+            dos.writeBytes( "\r\n");
+
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void response302Header(DataOutputStream dos) {
+        try {
+            dos.writeBytes("HTTP/1.1 302 OK \r\n");
+            dos.writeBytes("Location: /index.html \r\n"); // redirect 해줄 페이지 주소
             dos.writeBytes( "\r\n");
 
         } catch (IOException e) {

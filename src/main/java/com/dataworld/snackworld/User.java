@@ -1,5 +1,8 @@
 package com.dataworld.snackworld;
 
+import lombok.Getter;
+
+@Getter
 public class User {
     private String userId;
     private String userPw;
