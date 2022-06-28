@@ -27,5 +27,9 @@ public class UserList {
         return false;
     }
 
+    public void addUser(User user) {
+        userList.add(user);
+    }
+
 
 }

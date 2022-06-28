@@ -2,6 +2,7 @@ package com.dataworld.server;
 
 import com.dataworld.snackworld.Goods;
 import com.dataworld.snackworld.GoodsList;
+import com.dataworld.snackworld.User;
 import com.dataworld.snackworld.UserList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -126,11 +127,8 @@ public class RequestHandler extends Thread{
 
                 UserList userList = UserList.getInstance();
 
-                if(!userList.login(Id, Pw)){
-                    log.debug("login 실패");
-                    return;
-                }
-                log.debug("login 성공");
+
+                userList.addUser(new User(Id, Pw));
 
 
                 DataOutputStream dos = new DataOutputStream(out);
