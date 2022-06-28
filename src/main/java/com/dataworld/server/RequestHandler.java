@@ -2,6 +2,7 @@ package com.dataworld.server;
 
 import com.dataworld.snackworld.Goods;
 import com.dataworld.snackworld.GoodsList;
+import com.dataworld.snackworld.UserList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,15 +41,9 @@ public class RequestHandler extends Thread{
                 log.debug("header : {}", line);
             }
 
-            StringBuilder sb = new StringBuilder();
+            String content = "";
             if("POST".equals(tokens[0])){
-
-                while(br.ready()){
-                    line = br.readLine();
-                    log.debug("content : {}", line);
-                    sb.append(line);
-                    sb.append("&");
-                }
+                content = postHandler(br);
             }
 
 //            if("POST".equals(tokens[0])){
@@ -58,6 +53,8 @@ public class RequestHandler extends Thread{
 //                    log.debug("content : {}", String.valueOf(test));
 //                }
 //            }
+
+            String[] contentTokens;
             if("/product/regForm".equals(tokens[1])){
                 // 상품 폼 페이지
                 DataOutputStream dos = new DataOutputStream(out);
@@ -68,19 +65,81 @@ public class RequestHandler extends Thread{
 
             if("/product".equals(tokens[1])){
                 // 상품 등록
-                String content = sb.toString();
-                String[] contentToken = content.split("&");
+                // Map 으로 변환하는 방법 찾아보기
+                contentTokens = content.split("&");
 
-                String goodsName = contentToken[0].split("=")[1];
-                int goodsPrice = Integer.parseInt(contentToken[1].split("=")[1]);
+                String goodsName = contentTokens[0].split("=")[1];
+                int goodsPrice = Integer.parseInt(contentTokens[1].split("=")[1]);
+
                 GoodsList goodsList = GoodsList.getInstance();
                 goodsList.addGoods(new Goods(goodsName, goodsPrice));
 
-                Goods goods = goodsList.retrieveGoods(goodsName);
-                log.debug("success");
-                log.debug("goodsName : {}", goods.getGoodsName());
-                log.debug("goodsPrice : {}", goods.getPrice());
+
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp/product/regForm.html").toPath());
+                response200Header(dos, body.length);
+                responseBody(dos, body);
             }
+
+            if("/login/loginForm".equals(tokens[1])){
+                // 상품 폼 페이지
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            }
+
+            if("/login".equals(tokens[1])){
+                contentTokens = content.split("&");
+
+                String Id = contentTokens[0].split("=")[1];
+                String Pw = contentTokens[1].split("=")[1];
+
+                UserList userList = UserList.getInstance();
+
+                if(!userList.login(Id, Pw)){
+                    log.debug("login 실패");
+                    return;
+                }
+                log.debug("login 성공");
+
+
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            }
+
+            if("/login/regUserForm".equals(tokens[1])){
+                // 상품 폼 페이지
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            }
+
+            if("/user".equals(tokens[1])){
+                contentTokens = content.split("&");
+
+                String Id = contentTokens[0].split("=")[1];
+                String Pw = contentTokens[1].split("=")[1];
+
+                UserList userList = UserList.getInstance();
+
+                if(!userList.login(Id, Pw)){
+                    log.debug("login 실패");
+                    return;
+                }
+                log.debug("login 성공");
+
+
+                DataOutputStream dos = new DataOutputStream(out);
+                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            }
+
+
 
 
         } catch (IOException e) {
@@ -95,7 +154,6 @@ public class RequestHandler extends Thread{
             dos.writeBytes("Content-Type: text/html; charset=utf-8 \r\n");
             dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
             dos.writeBytes( "\r\n");
-
 
         } catch (IOException e) {
             log.error(e.getMessage());
@@ -112,5 +170,21 @@ public class RequestHandler extends Thread{
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+
+    private String postHandler(BufferedReader br){
+        StringBuilder sb = new StringBuilder();
+        try{
+           while(br.ready()){
+               String line = br.readLine();
+               log.debug("content : {}", line);
+               sb.append(line);
+               sb.append("&");
+           }
+       } catch (IOException e) {
+           log.error(e.getMessage());
+       }
+        return sb.toString();
     }
 }
