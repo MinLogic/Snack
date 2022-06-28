@@ -1,5 +1,7 @@
 package com.dataworld.server;
 
+import com.dataworld.http.HttpRequest;
+import com.dataworld.http.HttpResponse;
 import com.dataworld.snackworld.Goods;
 import com.dataworld.snackworld.GoodsList;
 import com.dataworld.snackworld.User;
@@ -29,6 +31,10 @@ public class RequestHandler extends Thread{
         try (InputStream in = connection.getInputStream();
              OutputStream out = connection.getOutputStream()) {
             //TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
+            HttpRequest httpRequest = new HttpRequest(in); // 이거 하나로 퉁칠수 있게 만들것
+            HttpResponse httpResponse = new HttpResponse(out);
+            String url; // getDefaultPath  -> 인덱스로 가는 거
+
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line = br.readLine();
 
@@ -74,7 +80,7 @@ public class RequestHandler extends Thread{
 //            }
 
             int contentLength = 0; // 나중에 위로 빼야함
-            String url = tokens[1];
+            String url = null;
             if ("/user/create".equals(url)) {
                 String body = IOUtils.readData(br, contentLength);
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
