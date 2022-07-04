@@ -1,10 +1,15 @@
 package com.dataworld.db;
 
+import com.dataworld.product.Product;
 import com.dataworld.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
 public class Users {
+    private static final Logger log = LoggerFactory.getLogger(Users.class);
+
     private static Users instance = new Users();
     private ArrayList<User> userList;
 
@@ -16,6 +21,9 @@ public class Users {
         return instance;
     }
 
+    public int countUserList(){
+        return userList.size();
+    }
 
     public boolean login(String Id, String Pw){
         for(User item : userList){
@@ -29,12 +37,90 @@ public class Users {
         return false;
     }
 
+    // ID 사용해서 상품 1개만 검색
+    public User retrieveUser(String Id) {
+        User temp = null;
+        for (User user : userList) {
+            String userId = user.getUserId();
+            if(userId.equals(Id)){
+                temp = user;
+            }
+        }
+
+        if (temp != null) {
+            if (!isDeleted(temp)) {
+                return temp;
+            }
+        }
+        return null;
+    }
+
+    public boolean isDeleted(User user) {
+        if ("N".equals(user.getDelYn())) {
+            return false;
+        }
+        return true;
+    }
+
     public void regUser(User user) {
-        userList.add(user);
+        User target = retrieveUser(user.getUserId());
+        if(target == null){
+            userList.add(user);
+            log.info("User registration success");
+            log.info("{} has been registered", target.getUserId());
+            return;
+        }
+        log.info("User deletion failure");
+        log.info("User has already been registered");
     }
 
     public void delUser(User user) {
-        userList.remove(user);
+        User target = retrieveUser(user.getUserId());
+        if(target != null){
+            target.setDelYn("Y");
+            log.info("User deletion success");
+            return;
+        }
+        log.info("User deletion failure");
+        log.info("User has already been deleted or does not exist");
+    }
+
+    public void delProduct(String productId) {
+        Product target = retrieveProduct(productId);
+        if(target != null){
+            target.setDelYn("Y");
+            log.info("Product deletion success");
+            return;
+        }
+        log.info("Product deletion failure");
+        log.info("Product has already been deleted or does not exist");
+    }
+
+    public void modProduct(String productId, String name, int price) {
+        Product target = retrieveProduct(productId);
+        if (target != null) {
+            target.modProduct(name, price);
+            log.info("Product Modification success");
+            return;
+        }
+        log.info("Product Modification failure");
+        log.info("Product does not exist");
+
+    }
+
+
+
+
+    // 상품명 사용해서 리스트 검색
+    public ArrayList<Product> searchGoodsList(String goodsName){
+        ArrayList<Product> retrievedList = new ArrayList<>();
+        for(Product item : productList){
+            String itemName = item.getProductName();
+            if(itemName.contains(goodsName)){
+                retrievedList.add(item);
+            }
+        }
+        return retrievedList;
     }
 
 

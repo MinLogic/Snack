@@ -1,15 +1,15 @@
 package com.dataworld.db;
 
 import com.dataworld.product.Product;
-import com.dataworld.server.WebServer;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 
+@Getter
 public class Products {
     private static final Logger log = LoggerFactory.getLogger(Products.class);
-
     private static Products instance = new Products();
     private ArrayList<Product> productList;
 
@@ -26,46 +26,31 @@ public class Products {
     }
 
     public void regProduct(Product product) {
-        Product tempItem = retrieveProduct(product.getProductName());
-
-        if(tempItem != null){
-            if(!isDeleted(tempItem)){
-                log.info("Product registration failure");
-                log.info("{} is already registered", product.getProductName());
-                return;
-            }
-            productList.remove(tempItem);
-        }
-
         productList.add(product);
         log.info("Product registration success");
     }
-    public void delProduct(String productName) {
-        Product tempItem = retrieveProduct(productName);
-        if(tempItem != null){
-            if(isDeleted(tempItem)){
-                log.info("Product deletion failure");
-                log.info("{} is already deleted", productName);
-                return;
-            }
-        } else if (tempItem == null) {
-            log.info("Product deletion failure");
-            log.info("{} does not exist", productName);
+
+    public void delProduct(String productId) {
+        Product target = retrieveProduct(productId);
+        if(target != null){
+            target.setDelYn("Y");
+            log.info("Product deletion success");
             return;
         }
-        tempItem.setDelYn("Y");
-        log.info("Product deletion success");
+        log.info("Product deletion failure");
+        log.info("Product has already been deleted or does not exist");
     }
 
-    public ArrayList<Product> searchGoodsList(String goodsName){
-        ArrayList<Product> retrievedList = new ArrayList<>();
-        for(Product item : productList){
-            String itemName = item.getProductName();
-            if(itemName.contains(goodsName)){
-                retrievedList.add(item);
-            }
+    public void modProduct(String productId, String name, int price) {
+        Product target = retrieveProduct(productId);
+        if (target != null) {
+            target.modProduct(name, price);
+            log.info("Product Modification success");
+            return;
         }
-        return retrievedList;
+        log.info("Product Modification failure");
+        log.info("Product does not exist");
+
     }
 
     public boolean isDeleted(Product item) {
@@ -75,41 +60,32 @@ public class Products {
         return true;
     }
 
-    public Product retrieveProduct(String productName) {
+    // ID 사용해서 상품 1개만 검색
+    public Product retrieveProduct(String productId) {
+        Product temp = null;
         for (Product item : productList) {
-            String itemName = item.getProductName();
-            if(itemName.equals(productName)){
-                return item;
+            String itemName = item.getProductId();
+            if(itemName.equals(productId)){
+                temp = item;
+            }
+        }
+        if (temp != null) {
+            if (!isDeleted(temp)) {
+                return temp;
             }
         }
         return null;
     }
 
-
-    public boolean deleteProduct(){
-        return false;
-    }
-
-
-    public void deleteGoods(String goodsName){
-        // 향상된 for 문 사용시 ConcurrentModificationException 발생
-        for(int i = 0; i< productList.size(); i++){
-            Product item = productList.get(i);
+    // 상품명 사용해서 리스트 검색
+    public ArrayList<Product> searchGoodsList(String goodsName){
+        ArrayList<Product> retrievedList = new ArrayList<>();
+        for(Product item : productList){
             String itemName = item.getProductName();
-            if(itemName.equals(goodsName)){
-                productList.remove(item);
+            if(itemName.contains(goodsName)){
+                retrievedList.add(item);
             }
         }
-    }
-
-    public Product retrieveGoods(String goodsName) {
-        for(int i = 0; i< productList.size(); i++){
-            Product item = productList.get(i);
-            String itemName = item.getProductName();
-            if(itemName.equals(goodsName)){
-                return item;
-            }
-        }
-        return null;
+        return retrievedList;
     }
 }

@@ -7,9 +7,16 @@ public class User {
     private String userId;
     private String userPw;
 
+    private String delYn;
+
     public User(String userId, String userPw){
         this.userId = userId;
         this.userPw = userPw;
+        this.delYn = "N";
+    }
+
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
     }
 
     /*
