@@ -19,6 +19,14 @@ public class User {
         this.delYn = delYn;
     }
 
+    public void resetPassword() {
+        this.userPw = "1q2w3e4r!";
+    }
+
+    public void modPassword(String userPw){
+        this.userPw = userPw;
+    }
+
     /*
     상태 = 단순한 값(속성)과 다른 객체(링크)로 표현할 수 있다
     행동 = 다른 객체에 서비스 한다
