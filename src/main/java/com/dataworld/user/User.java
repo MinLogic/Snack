@@ -1,4 +1,4 @@
-package com.dataworld.snackworld;
+package com.dataworld.user;
 
 import lombok.Getter;
 
@@ -10,14 +10,6 @@ public class User {
     public User(String userId, String userPw){
         this.userId = userId;
         this.userPw = userPw;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public String getUserPw() {
-        return userPw;
     }
 
     /*

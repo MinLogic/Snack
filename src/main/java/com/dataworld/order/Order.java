@@ -1,12 +1,15 @@
-package com.dataworld.snackworld;
+package com.dataworld.order;
+
+import com.dataworld.product.Product;
+import com.dataworld.user.User;
 
 import java.util.List;
 
 public class Order {
     private User orderUser;
-    private List<Goods> orderList;
+    private List<Product> orderList;
 
-    public Order(User orderUser, List<Goods> orderList){
+    public Order(User orderUser, List<Product> orderList){
         this.orderUser = orderUser;
         this.orderList = orderList;
     }
@@ -15,7 +18,7 @@ public class Order {
         return orderUser;
     }
 
-    public List<Goods> getOrderList() {
+    public List<Product> getOrderList() {
         return orderList;
     }
 }

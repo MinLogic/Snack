@@ -1,16 +1,18 @@
-package com.dataworld.snackworld;
+package com.dataworld.db;
+
+import com.dataworld.user.User;
 
 import java.util.ArrayList;
 
-public class UserList {
-    private static UserList instance = new UserList();
+public class Users {
+    private static Users instance = new Users();
     private ArrayList<User> userList;
 
-    private UserList(){
+    private Users(){
         userList = new ArrayList<>();
     }
 
-    public static UserList getInstance(){
+    public static Users getInstance(){
         return instance;
     }
 
@@ -27,8 +29,12 @@ public class UserList {
         return false;
     }
 
-    public void addUser(User user) {
+    public void regUser(User user) {
         userList.add(user);
+    }
+
+    public void delUser(User user) {
+        userList.remove(user);
     }
 
 

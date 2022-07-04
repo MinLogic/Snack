@@ -1,17 +1,19 @@
-package com.dataworld.snackworld;
+package com.dataworld.db;
+
+import com.dataworld.order.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderList {
-    private static OrderList instance = new OrderList();
+public class Orders {
+    private static Orders instance = new Orders();
     private List<Order> orderList;
 
-    private OrderList(){
+    private Orders(){
         orderList = new ArrayList<>();
     }
 
-    public static OrderList getOrderList(){
+    public static Orders getOrderList(){
         return instance;
     }
 

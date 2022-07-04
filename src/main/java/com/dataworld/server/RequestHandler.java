@@ -2,10 +2,10 @@ package com.dataworld.server;
 
 import com.dataworld.http.HttpRequest;
 import com.dataworld.http.HttpResponse;
-import com.dataworld.snackworld.Goods;
-import com.dataworld.snackworld.GoodsList;
-import com.dataworld.snackworld.User;
-import com.dataworld.snackworld.UserList;
+import com.dataworld.product.Product;
+import com.dataworld.db.Products;
+import com.dataworld.user.User;
+import com.dataworld.db.Users;
 import com.dataworld.util.HttpRequestUtils;
 import com.dataworld.util.IOUtils;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class RequestHandler extends Thread{
             //TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
             HttpRequest httpRequest = new HttpRequest(in); // 이거 하나로 퉁칠수 있게 만들것
             HttpResponse httpResponse = new HttpResponse(out);
-            String url; // getDefaultPath  -> 인덱스로 가는 거
+            //String url; // getDefaultPath  -> 인덱스로 가는 거
 
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line = br.readLine();
@@ -80,7 +80,7 @@ public class RequestHandler extends Thread{
 //            }
 
             int contentLength = 0; // 나중에 위로 빼야함
-            String url = null;
+            String url= null;
             if ("/user/create".equals(url)) {
                 String body = IOUtils.readData(br, contentLength);
                 Map<String, String> params = HttpRequestUtils.parseQueryString(body);
@@ -113,8 +113,8 @@ public class RequestHandler extends Thread{
                 String goodsName = contentTokens[0].split("=")[1];
                 int goodsPrice = Integer.parseInt(contentTokens[1].split("=")[1]);
 
-                GoodsList goodsList = GoodsList.getInstance();
-                goodsList.addGoods(new Goods(goodsName, goodsPrice));
+                Products products = Products.getInstance();
+                products.regProduct(new Product(goodsName, goodsPrice));
 
 
 //                DataOutputStream dos = new DataOutputStream(out);
@@ -137,9 +137,9 @@ public class RequestHandler extends Thread{
                 String Id = contentTokens[0].split("=")[1];
                 String Pw = contentTokens[1].split("=")[1];
 
-                UserList userList = UserList.getInstance();
+                Users users = Users.getInstance();
 
-                if(!userList.login(Id, Pw)){
+                if(!users.login(Id, Pw)){
                     log.debug("login 실패");
                     return;
                 }
@@ -166,10 +166,10 @@ public class RequestHandler extends Thread{
                 String Id = contentTokens[0].split("=")[1];
                 String Pw = contentTokens[1].split("=")[1];
 
-                UserList userList = UserList.getInstance();
+                Users users = Users.getInstance();
 
 
-                userList.addUser(new User(Id, Pw));
+                users.regUser(new User(Id, Pw));
 
 
                 DataOutputStream dos = new DataOutputStream(out);
