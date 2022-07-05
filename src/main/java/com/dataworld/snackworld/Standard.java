@@ -1,7 +1,11 @@
 package com.dataworld.snackworld;
 
+import com.dataworld.db.Users;
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class Standard {
     private static Standard standard = new Standard();
 

@@ -3,6 +3,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +45,21 @@ public class RequestHandlerTest {
         System.out.println("tempList = " + tempList.size());
         tempList.remove(temp);
         System.out.println("tempList = " + tempList.size());
+    }
+
+
+    @Test
+    public void localDateTeat(){
+        LocalDate localDate = LocalDate.now();
+        System.out.println("localDate = " + localDate);
+
+        String dateFormat = localDate.format(DateTimeFormatter.ofPattern("dd"));
+
+        System.out.println("dateFormat = " + dateFormat);
+
+        int intdate = Integer.parseInt(dateFormat);
+
+        System.out.println("intdate = " + intdate);
     }
 
 }
