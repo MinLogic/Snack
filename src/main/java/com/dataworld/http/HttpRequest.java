@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class HttpRequest {
-
     private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
 
     private RequestLine requestLine;
@@ -63,5 +62,4 @@ public class HttpRequest {
     public String getParameter(String name) {
         return requestParams.getParameter(name);
     }
-
 }

@@ -12,6 +12,7 @@ public class RequestLine {
 
     private String queryString;
 
+
     public RequestLine(String requestLine) {
         log.debug("request line : {}", requestLine);
         String[] tokens = requestLine.split(" ");

@@ -3,10 +3,7 @@ package com.dataworld.http;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,5 +90,9 @@ public class HttpResponse {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    public PrintWriter getWriter() throws IOException {
+        return new PrintWriter(OutputStream.nullOutputStream());
     }
 }

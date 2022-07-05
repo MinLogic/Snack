@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestParams {
+
     private static final Logger log = LoggerFactory.getLogger(RequestParams.class);
 
     private Map<String, String> params = new HashMap<>();
@@ -34,6 +35,4 @@ public class RequestParams {
     public String getParameter(String name) {
         return params.get(name);
     }
-
-
 }
