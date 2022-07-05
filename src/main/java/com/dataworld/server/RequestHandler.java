@@ -1,5 +1,6 @@
 package com.dataworld.server;
 
+import com.dataworld.controller.Controller;
 import com.dataworld.http.HttpRequest;
 import com.dataworld.http.HttpResponse;
 import com.dataworld.product.Product;
@@ -15,6 +16,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.util.Map;
+import java.util.Objects;
 
 public class RequestHandler extends Thread{
     private Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -33,26 +35,39 @@ public class RequestHandler extends Thread{
             //TODO 사용자 요청에 대한 처리는 이 곳에 구현하면 된다.
             HttpRequest httpRequest = new HttpRequest(in); // 이거 하나로 퉁칠수 있게 만들것
             HttpResponse httpResponse = new HttpResponse(out);
-            //String url; // getDefaultPath  -> 인덱스로 가는 거
+            String url = getDefaultPath(httpRequest.getPath());  //-> 인덱스로 가는 거
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String line = br.readLine();
-
-            log.debug("request line : {}", line);
-
-            if(line.equals(null)){
-                return;
+            Controller controller = RequestMapping.getController(url);
+            if (Objects.isNull(controller)) {
+                String path = getDefaultPath(url);
+            } else {
+                controller.service(httpRequest, httpResponse);
             }
 
-            String[] tokens = line.split(" ");
 
-            while(!"".equals(line)){
-                line = br.readLine();
-                log.debug("header : {}", line);
-                if(line.contains("Content-length")){
+            // client 가 ajax 콜을 하면
+            // ex) api/users
+            //      유저 정보를 JSON 형태로 모두 반환
 
-                }
-            }
+
+//            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+//            String line = br.readLine();
+//
+//            log.debug("request line : {}", line);
+//
+//            if(line.equals(null)){
+//                return;
+//            }
+//
+//            String[] tokens = line.split(" ");
+//
+//            while(!"".equals(line)){
+//                line = br.readLine();
+//                log.debug("header : {}", line);
+//                if(line.contains("Content-length")){
+//
+//                }
+//            }
             // line 중에 contains content-length 해서 content-length 구하기
             // content-length 길이로 char[] 만들기 ?? byte[] 만들기?
             // inputstream 을 content-length 만큼 읽어서 char[] 에 넣기
@@ -65,11 +80,11 @@ public class RequestHandler extends Thread{
             // 정리 http 는 세션을 쿠키로 관리
             // 서블릿 컨테이너에서 서블릿이 jsessionid 를 사용해 관리
 
-            String content = "";
-            if("POST".equals(tokens[0])){
-                content = br.readLine();
+//            String content = "";
+//            if("POST".equals(tokens[0])){
+//                content = br.readLine();
 //                content = postHandler(br);
-            }
+//            }
 
 //            if("POST".equals(tokens[0])){
 //                while(br.ready()){
@@ -80,41 +95,41 @@ public class RequestHandler extends Thread{
 //            }
 
             int contentLength = 0; // 나중에 위로 빼야함
-            String url= null;
+            url= null;
             if ("/user/create".equals(url)) {
-                String body = IOUtils.readData(br, contentLength);
-                Map<String, String> params = HttpRequestUtils.parseQueryString(body);
-                User user = new User(params.get("userId"), params.get("password"));
-                // userlist 클래스에 정의해둔 addUser 불러와서 실행
-                DataOutputStream dos = new DataOutputStream(out);
-                // redirect 를 해야함
-                // redirect는 302 헤더를 가지고 넘어가야함
+//                String body = IOUtils.readData(br, contentLength);
+//                Map<String, String> params = HttpRequestUtils.parseQueryString(body);
+//                User user = new User(params.get("userId"), params.get("password"));
+//                // userlist 클래스에 정의해둔 addUser 불러와서 실행
+//                DataOutputStream dos = new DataOutputStream(out);
+//                // redirect 를 해야함
+//                // redirect는 302 헤더를 가지고 넘어가야함
 
             } else if ("/user/regform".equals(url)) {
 
             }
 
             String[] contentTokens;
-            if("/product/regForm".equals(tokens[1])){
-                // 상품 폼 페이지
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
+            if("/product/regForm".equals(url)){
+//                // 상품 폼 페이지
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + url + ".html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
             }
 
-            if("/product".equals(tokens[1])){
+            if("/product".equals(url)){
                 //
-                String body = IOUtils.readData(br, contentLength);
-                // 상품 등록
-                // Map 으로 변환하는 방법 찾아보기
-                contentTokens = content.split("&");
-
-                String goodsName = contentTokens[0].split("=")[1];
-                int goodsPrice = Integer.parseInt(contentTokens[1].split("=")[1]);
-
-                Products products = Products.getInstance();
-                products.regProduct(new Product(goodsName, goodsPrice));
+//                String body = IOUtils.readData(br, contentLength);
+//                // 상품 등록
+//                // Map 으로 변환하는 방법 찾아보기
+//                contentTokens = content.split("&");
+//
+//                String goodsName = contentTokens[0].split("=")[1];
+//                int goodsPrice = Integer.parseInt(contenturl.split("=")[1]);
+//
+//                Products products = Products.getInstance();
+//                products.regProduct(new Product(goodsName, goodsPrice));
 
 
 //                DataOutputStream dos = new DataOutputStream(out);
@@ -123,59 +138,59 @@ public class RequestHandler extends Thread{
 //                responseBody(dos, body);
             }
 
-            if("/login/loginForm".equals(tokens[1])){
+            if("/login/loginForm".equals(url)){
+//                // 상품 폼 페이지
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + url + ".html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
+            }
+
+            if("/login".equals(url)){
+//                contentTokens = content.split("&");
+//
+//                String Id = contentTokens[0].split("=")[1];
+//                String Pw = contenturl.split("=")[1];
+//
+//                Users users = Users.getInstance();
+//
+//                if(!users.login(Id, Pw)){
+//                    log.debug("login 실패");
+//                    return;
+//                }
+//                log.debug("login 성공");
+//
+//
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
+            }
+
+            if("/login/regUserForm".equals(url)){
                 // 상품 폼 페이지
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + url + ".html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
             }
 
-            if("/login".equals(tokens[1])){
-                contentTokens = content.split("&");
-
-                String Id = contentTokens[0].split("=")[1];
-                String Pw = contentTokens[1].split("=")[1];
-
-                Users users = Users.getInstance();
-
-                if(!users.login(Id, Pw)){
-                    log.debug("login 실패");
-                    return;
-                }
-                log.debug("login 성공");
-
-
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
-            }
-
-            if("/login/regUserForm".equals(tokens[1])){
-                // 상품 폼 페이지
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp" + tokens[1] + ".html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
-            }
-
-            if("/user".equals(tokens[1])){
-                contentTokens = content.split("&");
-
-                String Id = contentTokens[0].split("=")[1];
-                String Pw = contentTokens[1].split("=")[1];
-
-                Users users = Users.getInstance();
-
-
-                users.regUser(new User(Id, Pw));
-
-
-                DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
-                response200Header(dos, body.length);
-                responseBody(dos, body);
+            if("/user".equals(url)){
+//                contentTokens = content.split("&");
+//
+//                String Id = contentTokens[0].split("=")[1];
+//                String Pw = contenturl.split("=")[1];
+//
+//                Users users = Users.getInstance();
+//
+//
+//                users.regUser(new User(Id, Pw));
+//
+//
+//                DataOutputStream dos = new DataOutputStream(out);
+//                byte[] body = Files.readAllBytes(new File("./src/main/webapp/login/loginForm.html").toPath());
+//                response200Header(dos, body.length);
+//                responseBody(dos, body);
             }
 
         } catch (IOException e) {
@@ -234,5 +249,12 @@ public class RequestHandler extends Thread{
            log.error(e.getMessage());
        }
         return sb.toString();
+    }
+
+    private String getDefaultPath(String path) {
+        if (path.equals("/")) {
+            return "/index.html";
+        }
+        return path;
     }
 }
