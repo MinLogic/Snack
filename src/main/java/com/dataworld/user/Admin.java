@@ -10,7 +10,7 @@ public class Admin extends User {
     Products products = Products.getInstance();
 
     Standard standard = Standard.getStandard();
-    Admin(String userId, String userPw) {
+    public Admin(String userId, String userPw) {
         super(userId, userPw);
     }
 
@@ -19,6 +19,9 @@ public class Admin extends User {
     }
     public void delUser(User user){
         users.delUser(user);
+    }
+    public void delUser(String userId){
+        users.delUser(userId);
     }
 
     public void regProduct(Product product) {

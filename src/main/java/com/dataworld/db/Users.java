@@ -68,7 +68,7 @@ public class Users {
         if(target == null){
             userList.add(user);
             log.info("User registration success");
-            log.info("{} has been registered", target.getUserId());
+            log.info("{}", user.getUserId());
             return;
         }
         log.info("User deletion failure");
@@ -77,6 +77,17 @@ public class Users {
 
     public void delUser(User user) {
         User target = retrieveUser(user.getUserId());
+        if(target != null){
+            target.setDelYn("Y");
+            log.info("User deletion success");
+            return;
+        }
+        log.info("User deletion failure");
+        log.info("User has already been deleted or does not exist");
+    }
+
+    public void delUser(String userId) {
+        User target = retrieveUser(userId);
         if(target != null){
             target.setDelYn("Y");
             log.info("User deletion success");

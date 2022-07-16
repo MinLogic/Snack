@@ -1,4 +1,7 @@
 import com.dataworld.product.Product;
+import com.dataworld.user.Admin;
+import com.dataworld.user.CommonUser;
+import com.dataworld.user.User;
 import org.junit.Test;
 
 import java.io.File;
@@ -60,6 +63,16 @@ public class RequestHandlerTest {
         int intdate = Integer.parseInt(dateFormat);
 
         System.out.println("intdate = " + intdate);
+    }
+
+    @Test
+    public void extendsTest() {
+        User common = new CommonUser("abc", "1234");
+        Admin admin = new Admin("aaaa", "1234");
+
+        User temp = common;
+        System.out.println(temp.getUserId());
+        admin.regUser(new CommonUser("aadd", "1234"));
     }
 
 }
