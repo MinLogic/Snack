@@ -78,11 +78,12 @@ public class Products {
     }
 
     // 상품명 사용해서 리스트 검색
-    public ArrayList<Product> searchGoodsList(String goodsName){
+    public ArrayList<Product> searchProductList(String goodsName){
         ArrayList<Product> retrievedList = new ArrayList<>();
         for(Product item : productList){
             String itemName = item.getProductName();
-            if(itemName.contains(goodsName)){
+            String delYn = item.getDelYn();
+            if(itemName.contains(goodsName) && "N".equals(delYn)){
                 retrievedList.add(item);
             }
         }
