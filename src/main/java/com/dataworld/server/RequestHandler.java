@@ -40,6 +40,7 @@ public class RequestHandler extends Thread{
             Controller controller = RequestMapping.getController(url);
             if (Objects.isNull(controller)) {
                 String path = getDefaultPath(url);
+                httpResponse.forward(path);
             } else {
                 controller.service(httpRequest, httpResponse);
             }
@@ -47,59 +48,6 @@ public class RequestHandler extends Thread{
         } catch (IOException e) {
             log.error(e.getMessage());
         }
-    }
-
-
-    private void response200Header(DataOutputStream dos, int lengthOfBodyContent) {
-        try {
-            dos.writeBytes("HTTP/1.1 200 OK \r\n");
-            dos.writeBytes("Content-Type: text/html; charset=utf-8 \r\n");
-            dos.writeBytes("Content-Length: " + lengthOfBodyContent + "\r\n");
-            dos.writeBytes("Sek-Cookie: logined=true; Path=/ \r\n"); // 쿠키담는거
-            dos.writeBytes( "\r\n");
-
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void response302Header(DataOutputStream dos) {
-        try {
-            dos.writeBytes("HTTP/1.1 302 OK \r\n");
-            dos.writeBytes("Location: /index.html \r\n"); // redirect 해줄 페이지 주소
-            dos.writeBytes( "\r\n");
-
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-
-    private void responseBody(DataOutputStream dos, byte[] body) {
-        try {
-            dos.write(body, 0, body.length);
-            dos.writeBytes( "\r\n");
-            dos.flush();
-
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-
-    private String postHandler(BufferedReader br){
-        StringBuilder sb = new StringBuilder();
-        try{
-           while(br.ready()){
-               String line = br.readLine();
-               log.debug("content : {}", line);
-               sb.append(line);
-               sb.append("&");
-           }
-       } catch (IOException e) {
-           log.error(e.getMessage());
-       }
-        return sb.toString();
     }
 
     private String getDefaultPath(String path) {

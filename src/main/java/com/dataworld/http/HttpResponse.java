@@ -26,7 +26,7 @@ public class HttpResponse {
 
     public void forward(String url) {
         try {
-            byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
+            byte[] body = Files.readAllBytes(new File(url).toPath());
             if (url.endsWith(".css")) {
                 headers.put("Content-Type", "text/css");
             } else if (url.endsWith(".js")) {
