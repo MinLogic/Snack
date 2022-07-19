@@ -1,5 +1,6 @@
 package com.dataworld.db;
 
+import com.dataworld.user.Admin;
 import com.dataworld.user.User;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -12,10 +13,14 @@ public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
 
     private static Users instance = new Users();
+
+    // TODO List -> Map
     private ArrayList<User> userList;
 
     private Users(){
         userList = new ArrayList<>();
+        // 임시 계정
+        userList.add(new Admin("admin", "admin"));
     }
 
     public static Users getInstance(){
@@ -26,19 +31,7 @@ public class Users {
         return userList.size();
     }
 
-    public boolean login(String Id, String Pw){
-        for(User item : userList){
-            String userId = item.getUserId();
-            String userPw = item.getUserPw();
-
-            if((Id.equals(userId)) && (Pw.equals(userPw))){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // ID 사용해서 상품 1개만 검색
+    // ID 사용해서 유저 하나만 검색
     public User retrieveUser(String Id) {
         User temp = null;
         for (User user : userList) {

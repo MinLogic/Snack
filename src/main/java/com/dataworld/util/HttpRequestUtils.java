@@ -27,7 +27,6 @@ public class HttpRequestUtils {
         }
 
         String[] tokens = values.split(separator);
-        // 이거 무슨 의미인지 체크
         return Arrays.stream(tokens)
                 .map(t -> getKeyValue(t, "="))
                 .filter(p -> p != null)

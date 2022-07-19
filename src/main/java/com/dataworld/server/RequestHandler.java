@@ -40,7 +40,7 @@ public class RequestHandler extends Thread{
             Controller controller = RequestMapping.getController(url);
             if (Objects.isNull(controller)) {
                 String path = getDefaultPath(url);
-                httpResponse.forward(path);
+                httpResponse.forward("./src/main/webapp" + path);
             } else {
                 controller.service(httpRequest, httpResponse);
             }

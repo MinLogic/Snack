@@ -14,6 +14,7 @@ public class RequestMapping {
     static {
         controllers.put("/user/create", new CreateUserController());
         controllers.put("/login", new LoginController());
+        controllers.put("/login/loginForm", new LoginController());
         controllers.put("/api/users", (Controller) new ApiUsersController());
     }
 

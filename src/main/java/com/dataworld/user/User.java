@@ -27,6 +27,8 @@ public class User {
         this.userPw = userPw;
     }
 
-
+    public boolean login(String userPw) {
+        return this.userPw.equals(userPw);
+    }
 
 }

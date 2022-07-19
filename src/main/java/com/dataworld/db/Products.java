@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class Products {
     private static final Logger log = LoggerFactory.getLogger(Products.class);
     private static Products instance = new Products();
+
+    // TODO List -> Map
     private ArrayList<Product> productList;
 
     private Products(){
