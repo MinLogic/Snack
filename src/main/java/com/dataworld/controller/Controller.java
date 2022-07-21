@@ -1,7 +1,7 @@
 package com.dataworld.controller;
 
-import com.dataworld.http.HttpRequest;
-import com.dataworld.http.HttpResponse;
+import com.dataworld.webServer.http.HttpRequest;
+import com.dataworld.webServer.http.HttpResponse;
 
 public interface Controller {
 

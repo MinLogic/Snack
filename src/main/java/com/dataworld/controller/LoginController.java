@@ -1,11 +1,9 @@
 package com.dataworld.controller;
 
-import com.dataworld.db.Users;
-import com.dataworld.http.HttpRequest;
-import com.dataworld.http.HttpResponse;
-import com.dataworld.user.User;
-
-import java.util.Objects;
+import com.dataworld.service.db.Users;
+import com.dataworld.webServer.http.HttpRequest;
+import com.dataworld.webServer.http.HttpResponse;
+import com.dataworld.service.user.User;
 
 public class LoginController extends AbstractController {
 
@@ -17,7 +15,8 @@ public class LoginController extends AbstractController {
 
         if (loginUser != null) {
             if (loginUser.login(request.getParameter("PW"))) {
-                response.addHeader("Set-cookie", "logined=true; Path=/");
+                response.addHeader("Set-cookie", "logined=true; Path=/;");
+                response.addHeader("Set-cookie", "SESSIONID=abdccddsfsdee; Path=/;");
                 response.sendRedirect("/home.html");
                 return;
             }

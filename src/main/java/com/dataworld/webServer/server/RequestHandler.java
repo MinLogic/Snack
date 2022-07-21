@@ -1,21 +1,13 @@
-package com.dataworld.server;
+package com.dataworld.webServer.server;
 
 import com.dataworld.controller.Controller;
-import com.dataworld.http.HttpRequest;
-import com.dataworld.http.HttpResponse;
-import com.dataworld.product.Product;
-import com.dataworld.db.Products;
-import com.dataworld.user.User;
-import com.dataworld.db.Users;
-import com.dataworld.util.HttpRequestUtils;
-import com.dataworld.util.IOUtils;
+import com.dataworld.webServer.http.HttpRequest;
+import com.dataworld.webServer.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.util.Map;
 import java.util.Objects;
 
 public class RequestHandler extends Thread{

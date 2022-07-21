@@ -1,9 +1,9 @@
-package com.dataworld.snackworld;
+package com.dataworld.service.snackworld;
 
-import com.dataworld.db.Orders;
-import com.dataworld.order.Order;
-import com.dataworld.product.Product;
-import com.dataworld.user.User;
+import com.dataworld.service.db.Orders;
+import com.dataworld.service.order.Order;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

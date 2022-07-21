@@ -1,8 +1,6 @@
-package com.dataworld.db;
+package com.dataworld.service.db;
 
-import com.dataworld.order.Order;
-import com.dataworld.product.Product;
-import com.dataworld.user.User;
+import com.dataworld.service.order.Order;
 
 import java.util.ArrayList;
 import java.util.List;

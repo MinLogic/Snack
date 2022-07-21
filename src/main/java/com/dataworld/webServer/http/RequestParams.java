@@ -1,6 +1,6 @@
-package com.dataworld.http;
+package com.dataworld.webServer.http;
 
-import com.dataworld.util.HttpRequestUtils;
+import com.dataworld.webServer.util.HttpRequestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

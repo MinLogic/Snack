@@ -1,6 +1,8 @@
 package com.dataworld.user;
 
-import com.dataworld.db.Users;
+import com.dataworld.service.db.Users;
+import com.dataworld.service.user.Admin;
+import com.dataworld.service.user.CommonUser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

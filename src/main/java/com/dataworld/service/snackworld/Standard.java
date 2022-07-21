@@ -1,4 +1,4 @@
-package com.dataworld.snackworld;
+package com.dataworld.service.snackworld;
 
 import lombok.Getter;
 import org.slf4j.Logger;

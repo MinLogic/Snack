@@ -1,11 +1,10 @@
-import com.dataworld.product.Product;
-import com.dataworld.user.Admin;
-import com.dataworld.user.CommonUser;
-import com.dataworld.user.User;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.user.Admin;
+import com.dataworld.service.user.CommonUser;
+import com.dataworld.service.user.User;
 import org.junit.Test;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

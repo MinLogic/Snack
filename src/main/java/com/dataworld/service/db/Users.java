@@ -1,7 +1,7 @@
-package com.dataworld.db;
+package com.dataworld.service.db;
 
-import com.dataworld.user.Admin;
-import com.dataworld.user.User;
+import com.dataworld.service.user.Admin;
+import com.dataworld.service.user.User;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

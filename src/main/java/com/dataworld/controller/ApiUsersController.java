@@ -1,15 +1,10 @@
 package com.dataworld.controller;
 
-import com.dataworld.db.Users;
-import com.dataworld.http.HttpRequest;
-import com.dataworld.http.HttpResponse;
-import com.dataworld.user.User;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.dataworld.webServer.http.HttpRequest;
+import com.dataworld.webServer.http.HttpResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 public class ApiUsersController implements Controller {
     @Override

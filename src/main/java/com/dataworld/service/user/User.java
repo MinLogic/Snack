@@ -1,4 +1,4 @@
-package com.dataworld.user;
+package com.dataworld.service.user;
 
 import lombok.Getter;
 

@@ -1,7 +1,6 @@
-package com.dataworld.user;
+package com.dataworld.service.user;
 
-import com.dataworld.db.Orders;
-import com.dataworld.user.User;
+import com.dataworld.service.db.Orders;
 
 public class Approver extends User {
     Approver(String userId, String userPw) {

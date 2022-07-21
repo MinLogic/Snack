@@ -1,8 +1,8 @@
-package com.dataworld.user;
+package com.dataworld.service.user;
 
-import com.dataworld.snackworld.Cart;
-import com.dataworld.product.Product;
-import com.dataworld.snackworld.Standard;
+import com.dataworld.service.snackworld.Cart;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.snackworld.Standard;
 
 public class CommonUser extends User {
     Cart cart;

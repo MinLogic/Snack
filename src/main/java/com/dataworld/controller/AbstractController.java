@@ -1,9 +1,9 @@
 package com.dataworld.controller;
 
 
-import com.dataworld.http.HttpMethod;
-import com.dataworld.http.HttpRequest;
-import com.dataworld.http.HttpResponse;
+import com.dataworld.webServer.http.HttpMethod;
+import com.dataworld.webServer.http.HttpRequest;
+import com.dataworld.webServer.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

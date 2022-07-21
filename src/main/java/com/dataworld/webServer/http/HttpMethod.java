@@ -1,4 +1,4 @@
-package com.dataworld.http;
+package com.dataworld.webServer.http;
 
 public enum HttpMethod {
     GET, POST;

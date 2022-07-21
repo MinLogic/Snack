@@ -1,15 +1,14 @@
-import com.dataworld.db.Products;
-import com.dataworld.db.Users;
-import com.dataworld.product.Product;
-import com.dataworld.snackworld.Standard;
-import com.dataworld.user.Admin;
-import com.dataworld.user.CommonUser;
-import com.dataworld.user.User;
+import com.dataworld.service.db.Products;
+import com.dataworld.service.db.Users;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.snackworld.Standard;
+import com.dataworld.service.user.Admin;
+import com.dataworld.service.user.CommonUser;
+import com.dataworld.service.user.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminTest {

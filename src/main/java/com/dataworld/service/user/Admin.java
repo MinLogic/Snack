@@ -1,9 +1,9 @@
-package com.dataworld.user;
+package com.dataworld.service.user;
 
-import com.dataworld.db.Products;
-import com.dataworld.db.Users;
-import com.dataworld.product.Product;
-import com.dataworld.snackworld.Standard;
+import com.dataworld.service.db.Products;
+import com.dataworld.service.db.Users;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.snackworld.Standard;
 
 public class Admin extends User {
     Users users = Users.getInstance();

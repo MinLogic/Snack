@@ -1,7 +1,7 @@
-package com.dataworld.order;
+package com.dataworld.service.order;
 
-import com.dataworld.product.Product;
-import com.dataworld.user.User;
+import com.dataworld.service.product.Product;
+import com.dataworld.service.user.User;
 import lombok.Getter;
 
 import java.util.List;

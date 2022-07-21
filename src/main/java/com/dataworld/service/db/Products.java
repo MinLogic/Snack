@@ -1,6 +1,6 @@
-package com.dataworld.db;
+package com.dataworld.service.db;
 
-import com.dataworld.product.Product;
+import com.dataworld.service.product.Product;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
