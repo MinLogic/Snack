@@ -11,7 +11,7 @@ public class Admin extends User {
 
     Standard standard = Standard.getStandard();
     public Admin(String userId, String userPw) {
-        super(userId, userPw);
+        super(userId, userPw, "Admin");
     }
 
     public void regUser(User user){

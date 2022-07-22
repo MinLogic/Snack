@@ -7,11 +7,13 @@ public class User {
     private String userId;
     private String userPw;
 
+    private String auth;
     private String delYn;
 
-    public User(String userId, String userPw){
+    public User(String userId, String userPw, String auth){
         this.userId = userId;
         this.userPw = userPw;
+        this.auth = auth;
         this.delYn = "N";
     }
 

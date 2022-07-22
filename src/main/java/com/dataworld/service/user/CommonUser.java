@@ -9,7 +9,7 @@ public class CommonUser extends User {
     int remainingAmount;
 
     public CommonUser(String userId, String userPw) {
-        super(userId, userPw);
+        super(userId, userPw, "Common");
         this.cart = new Cart();
         this.remainingAmount = Standard.getStandard()
                                 .getLimitedAmount();
