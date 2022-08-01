@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Getter
 public class Products {
     private static final Logger log = LoggerFactory.getLogger(Products.class);
-    private static Products instance = new Products();
+    private static Products products = new Products();
 
     // TODO List -> Map
     private ArrayList<Product> productList;
@@ -19,8 +19,8 @@ public class Products {
         productList = new ArrayList<>();
     }
 
-    public static Products getInstance(){
-        return instance;
+    public static Products getProducts(){
+        return products;
     }
 
     public int countProductsList(){

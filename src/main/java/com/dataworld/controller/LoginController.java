@@ -7,7 +7,7 @@ import com.dataworld.service.user.User;
 
 public class LoginController extends AbstractController {
 
-    Users users = Users.getInstance();
+    Users users = Users.getUsers();
 
     @Override
     public void doPost(HttpRequest request, HttpResponse response) {

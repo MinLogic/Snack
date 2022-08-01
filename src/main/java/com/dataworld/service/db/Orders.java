@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
-    private static Orders instance = new Orders();
+    private static Orders orders = new Orders();
     private List<Order> orderList;
 
     private Orders(){
@@ -14,7 +14,11 @@ public class Orders {
     }
 
     public static Orders getOrderList(){
-        return instance;
+        return orders;
+    }
+
+    public static Orders getOrders(){
+        return orders;
     }
 
     public void addOrderList(Order order){

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
 
-    private static Users instance = new Users();
+    private static Users users = new Users();
 
     // TODO List -> Map
     private ArrayList<User> userList;
@@ -23,8 +23,8 @@ public class Users {
         userList.add(new Admin("admin", "admin"));
     }
 
-    public static Users getInstance(){
-        return instance;
+    public static Users getUsers(){
+        return users;
     }
 
     public int countUserList(){
@@ -71,7 +71,7 @@ public class Users {
     public void delUser(User user) {
         User target = retrieveUser(user.getUserId());
         if(target != null){
-            target.setDelYn("Y");
+            target.delUser("Y");
             log.info("User deletion success");
             return;
         }
@@ -82,7 +82,7 @@ public class Users {
     public void delUser(String userId) {
         User target = retrieveUser(userId);
         if(target != null){
-            target.setDelYn("Y");
+            target.delUser("Y");
             log.info("User deletion success");
             return;
         }
