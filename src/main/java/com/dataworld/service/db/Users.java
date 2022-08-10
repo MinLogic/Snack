@@ -1,6 +1,5 @@
 package com.dataworld.service.db;
 
-import com.dataworld.service.user.Admin;
 import com.dataworld.service.user.User;
 import lombok.Getter;
 import org.slf4j.Logger;
@@ -11,24 +10,17 @@ import java.util.ArrayList;
 @Getter
 public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
-
-    private static Users users = new Users();
-
     // TODO List -> Map
-    private ArrayList<User> userList;
+    private static ArrayList<User> userList = new ArrayList<>();
 
-    private Users(){
-        userList = new ArrayList<>();
-        // 임시 계정
-        userList.add(new Admin("admin", "admin"));
-    }
-
-    public static Users getUsers(){
-        return users;
-    }
+    public Users(){ }
 
     public int countUserList(){
         return userList.size();
+    }
+
+    public ArrayList<User> retrieveAllUsers() {
+        return userList;
     }
 
     // ID 사용해서 유저 하나만 검색
@@ -41,10 +33,9 @@ public class Users {
             }
         }
 
-        if (temp != null) {
-            if (!isDeleted(temp)) {
-                return temp;
-            }
+        // delYn check
+        if (temp != null && !isDeleted(temp)) {
+            return temp;
         }
         return null;
     }
@@ -68,21 +59,11 @@ public class Users {
         log.info("User has already been registered");
     }
 
-    public void delUser(User user) {
-        User target = retrieveUser(user.getUserId());
-        if(target != null){
-            target.delUser("Y");
-            log.info("User deletion success");
-            return;
-        }
-        log.info("User deletion failure");
-        log.info("User has already been deleted or does not exist");
-    }
-
     public void delUser(String userId) {
         User target = retrieveUser(userId);
         if(target != null){
-            target.delUser("Y");
+            target.delUser();
+            setTargetUser(target);
             log.info("User deletion success");
             return;
         }
@@ -93,12 +74,19 @@ public class Users {
     public void resetPassword(String userId) {
         User target = retrieveUser(userId);
         target.resetPassword();
+        setTargetUser(target);
         log.info("Password Reset Success");
     }
 
     public void modPassword(String userId, String pw) {
         User target = retrieveUser(userId);
         target.modPassword(pw);
+        setTargetUser(target);
         log.info("Password Reset Success");
+    }
+
+    private void setTargetUser(User target) {
+        int index = userList.indexOf(target);
+        userList.set(index, target);
     }
 }

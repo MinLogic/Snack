@@ -21,11 +21,11 @@ public class Product {
         this.delYn = "N";
     }
 
-    public void setDelYn(String delYn) {
+    public void delProduct(String delYn) {
         this.delYn = delYn;
     }
 
-    public void modProduct(String productName, int price){
+    public void modProduct(String productName, Integer price){
         this.productName = productName;
         this.price = price;
     }
