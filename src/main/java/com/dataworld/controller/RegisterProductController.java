@@ -5,7 +5,7 @@ import com.dataworld.webServer.http.HttpRequest;
 import com.dataworld.webServer.http.HttpResponse;
 
 public class RegisterProductController extends AbstractController{
-    Products products = Products.getProducts();
+    Products products = new Products();
 
     @Override
     public void doGet(HttpRequest request, HttpResponse response) {

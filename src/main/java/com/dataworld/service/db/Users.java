@@ -11,22 +11,22 @@ import java.util.ArrayList;
 public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
     // TODO List -> Map
-    private static ArrayList<User> userList = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>();
 
     public Users(){ }
 
     public int countUserList(){
-        return userList.size();
+        return users.size();
     }
 
     public ArrayList<User> retrieveAllUsers() {
-        return userList;
+        return users;
     }
 
     // ID 사용해서 유저 하나만 검색
     public User retrieveUser(String Id) {
         User temp = null;
-        for (User user : userList) {
+        for (User user : users) {
             String userId = user.getUserId();
             if(userId.equals(Id)){
                 temp = user;
@@ -50,7 +50,7 @@ public class Users {
     public void regUser(User user) {
         User target = retrieveUser(user.getUserId());
         if(target == null){
-            userList.add(user);
+            users.add(user);
             log.info("User registration success");
             log.info("{}", user.getUserId());
             return;
@@ -86,7 +86,7 @@ public class Users {
     }
 
     private void setTargetUser(User target) {
-        int index = userList.indexOf(target);
-        userList.set(index, target);
+        int index = users.indexOf(target);
+        users.set(index, target);
     }
 }

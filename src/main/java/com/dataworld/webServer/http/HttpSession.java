@@ -18,14 +18,14 @@ public class HttpSession {
                 .replace("-", "");
     }
 
-    public static String setSession(User user){
-        String sessionId = newSessionId();
-        Map<String, String> userMap = new HashMap<>();
-            userMap.put("id", user.getUserId());
-        userMap.put("auth", user.getAuth());
-        sessions.put(sessionId, userMap);
-        return sessionId;
-    }
+//    public static String setSession(User user){
+//        String sessionId = newSessionId();
+//        Map<String, String> userMap = new HashMap<>();
+//            userMap.put("id", user.getUserId());
+//        userMap.put("auth", user.getAuth());
+//        sessions.put(sessionId, userMap);
+//        return sessionId;
+//    }
 
     public static boolean isExist(String sessionId) {
         Object obj = sessions.get(sessionId);

@@ -1,73 +1,60 @@
 package com.dataworld.service.db;
 
+import com.dataworld.service.order.Approval;
 import com.dataworld.service.order.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
-    private static Orders orders = new Orders();
-    private List<Order> orderList;
+    private static List<Order> orders = new ArrayList<>();
 
-    private Orders(){
-        orderList = new ArrayList<>();
-    }
-
-    public static Orders getOrderList(){
-        return orders;
-    }
-
-    public static Orders getOrders(){
-        return orders;
-    }
+    public Orders(){ }
 
     public void addOrderList(Order order){
-        orderList.add(order);
+        orders.add(order);
     }
 
-    // ID 사용해서 상품 1개만 검색
+    public static List<Order> retrieveAllOrder() {
+        return orders;
+    }
+
     public Order retrieveOrder(String orderId) {
-        Order temp = null;
-        for (Order item : orderList) {
-            String itemName = item.getOrderId();
-            if(itemName.equals(orderId)){
-                temp = item;
+        Order order = null;
+        for (Order item : orders) {
+            String itemId = item.getOrderId();
+            if(itemId.equals(orderId)){
+                order = item;
             }
         }
-        if (temp != null) {
-            return temp;
+        if (order != null) {
+            return order;
         }
         return null;
     }
 
-    // 사용자 ID로 주문 목록 조회
-    public ArrayList<Order> searchOrderList(String orderUser){
+    public ArrayList<Order> retrieveOrderList(String orderUserId){
         ArrayList<Order> retrievedList = new ArrayList<>();
-        for(Order item : orderList){
-            String orderId = item.getOrderId();
-            if(orderId.equals(orderUser)){
+        for(Order item : orders){
+            String itemUserId = item.getOrderUser()
+                                    .getUserId();
+            if(itemUserId.equals(orderUserId)){
                 retrievedList.add(item);
             }
         }
         return retrievedList;
     }
 
-    public ArrayList<Order> searchListWithFlag(String orderUser, String searchFlag){
+    public ArrayList<Order> retrieveOrderList(String orderUserId, Approval approvalFlag) {
         ArrayList<Order> retrievedList = new ArrayList<>();
-        for(Order item : orderList){
-            String orderId = item.getOrderId();
-            String flag = item.getApprovedFlag();
-            if(orderId.equals(orderUser) && searchFlag.equals(flag)){
+        for (Order item : orders) {
+            String itemUserId = item.getOrderUser()
+                    .getUserId();
+            Approval itemApproval = item.getApproval();
+            if (itemUserId.equals(orderUserId) && itemApproval == approvalFlag) {
                 retrievedList.add(item);
             }
         }
         return retrievedList;
     }
-
-
-    public void getApproval(String orderId, String flag) {
-        Order temp = retrieveOrder(orderId);
-        temp.getApproval(flag);
-    }
-
 }

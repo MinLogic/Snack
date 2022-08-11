@@ -12,7 +12,7 @@ public class Order {
     private String orderId;
     private User orderUser;
     private List<Product> orderList;
-    private String approvedFlag;  // A : 승인  R : 반려  S : 대기
+    private Approval approval;
 
     public Order(User orderUser, List<Product> orderList){
         this.orderUser = orderUser;
@@ -20,10 +20,10 @@ public class Order {
         this.orderId = UUID.randomUUID()
                 .toString()
                 .replace("-", "");
-        this.approvedFlag = "S";
+        this.approval = Approval.WAITING;
     }
 
-    public void getApproval(String flag){
-        this.approvedFlag = flag;
+    public void delProduct(String productId) {
+
     }
 }

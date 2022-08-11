@@ -25,7 +25,7 @@ public class Standard {
         return standard;
     }
 
-    public void setStandard(Integer startDate, Integer endDate, Integer limitedAmount) {
+    public void modStandard(Integer startDate, Integer endDate, Integer limitedAmount) {
         if (!isNull(limitedAmount)) {
             this.limitedAmount = limitedAmount;
         }

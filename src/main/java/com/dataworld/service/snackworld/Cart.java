@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Cart {
     private List<Product> cartList = new ArrayList<>();
-    Orders orders = Orders.getOrderList();
+    Orders orders = new Orders();
 
     public List<Product> getCartList() {
         return cartList;

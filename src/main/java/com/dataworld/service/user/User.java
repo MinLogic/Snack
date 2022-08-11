@@ -10,16 +10,16 @@ import lombok.Getter;
 
 @Getter
 public class User {
-    private String userId;
+    private final String userId;
     private String userPw;
-    private String auth;
+    private Auth auth;
     private String delYn;
 
     Cart cart;
     int remainingAmount;
     Standard standard = Standard.getStandard();
 
-    public User(String userId, String userPw, String auth){
+    public User(String userId, String userPw, Auth auth){
         this.userId = userId;
         this.userPw = userPw;
         this.auth = auth;

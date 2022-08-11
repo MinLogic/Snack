@@ -1,34 +1,31 @@
 package com.dataworld.service.db;
 
 import com.dataworld.service.product.Product;
-import com.dataworld.service.user.User;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Map;
 
 @Getter
 public class Products {
     private static final Logger log = LoggerFactory.getLogger(Products.class);
     // TODO List -> Map
-    public static ArrayList<Product> productList = new ArrayList<>();
+    public static ArrayList<Product> products = new ArrayList<>();
 
     public Products(){    }
 
     public int countProductsList(){
-        return productList.size();
+        return products.size();
     }
 
     public ArrayList<Product> retrieveAllProducts() {
-        return productList;
+        return products;
     }
 
     public Product retrieveProduct(String productId) {
         Product target = null;
-        for (Product item : productList) {
+        for (Product item : products) {
             String itemName = item.getProductId();
             if(itemName.equals(productId)){
                 target = item;
@@ -44,7 +41,7 @@ public class Products {
     // 상품명 사용해서 리스트 검색
     public ArrayList<Product> searchProductList(String goodsName){
         ArrayList<Product> retrievedList = new ArrayList<>();
-        for(Product item : productList){
+        for(Product item : products){
             String itemName = item.getProductName();
             if(itemName.contains(goodsName) && !isDeleted(item)){
                 retrievedList.add(item);
@@ -54,7 +51,7 @@ public class Products {
     }
 
     public void regProduct(Product product) {
-        productList.add(product);
+        products.add(product);
         log.info("Product registration success");
     }
 
@@ -89,8 +86,8 @@ public class Products {
         return true;
     }
     private void setTargetProduct(Product target) {
-        int index = productList.indexOf(target);
-        productList.set(index, target);
+        int index = products.indexOf(target);
+        products.set(index, target);
     }
 
     // ID 사용해서 상품 1개만 검색
