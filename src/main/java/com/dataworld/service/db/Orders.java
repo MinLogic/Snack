@@ -57,4 +57,15 @@ public class Orders {
         }
         return retrievedList;
     }
+
+    public void signOffOrder(String orderId, Approval approval) {
+        Order target = retrieveOrder(orderId);
+        target.signOff(approval);
+        setTargetOrder(target);
+    }
+
+    private void setTargetOrder(Order target) {
+        int index = orders.indexOf(target);
+        orders.set(index, target);
+    }
 }

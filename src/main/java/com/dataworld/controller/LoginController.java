@@ -7,138 +7,6 @@ import com.dataworld.service.user.User;
 
 public class LoginController extends AbstractController {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     Users users = new Users();
 
     @Override
@@ -148,7 +16,7 @@ public class LoginController extends AbstractController {
         if (loginUser != null) {
             if (loginUser.login(request.getParameter("PW"))) {
                 response.addHeader("Set-cookie", "logined=true; Path=/;");
-                response.addHeader("Set-cookie", "SESSIONID=abdccddsfsdee; Path=/;");
+                response.addHeader("Set-cookie", "SESSIONID=" + sessionId + "; Path=/;");
                 response.sendRedirect("/home.html");
                 return;
             }
@@ -158,6 +26,7 @@ public class LoginController extends AbstractController {
 
     @Override
     public void doGet(HttpRequest request, HttpResponse response) {
+        //TODO cookie sessionID 확인
         String path = request.getPath();
         response.forward("./src/main/webapp" + path + ".html");
     }

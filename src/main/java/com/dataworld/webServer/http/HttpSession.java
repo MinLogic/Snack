@@ -1,13 +1,12 @@
 package com.dataworld.webServer.http;
 
+import com.dataworld.service.user.Auth;
 import com.dataworld.service.user.User;
-import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Getter
 public class HttpSession {
     private static Map<String, Object> sessions = new HashMap<>();
 
@@ -18,14 +17,29 @@ public class HttpSession {
                 .replace("-", "");
     }
 
-//    public static String setSession(User user){
-//        String sessionId = newSessionId();
-//        Map<String, String> userMap = new HashMap<>();
-//            userMap.put("id", user.getUserId());
-//        userMap.put("auth", user.getAuth());
-//        sessions.put(sessionId, userMap);
-//        return sessionId;
-//    }
+    public static String makeNewSession(User user) {
+        String sessionId = newSessionId();
+        Map<String, Object> userSession = new HashMap<>();
+
+        userSession.put("ID", user.getUserId());
+        userSession.put("AUTH", user.getAuth());
+
+        sessions.put(sessionId, userSession);
+
+        return sessionId;
+    }
+
+    private static Map<String, Object> getSession(String sessionId) {
+        return (Map<String, Object>) sessions.get(sessionId);
+    }
+
+    public Auth getUserAuth(String sessionId) {
+        return (Auth) getSession(sessionId).get("AUTH");
+    }
+
+    public String getUserId(String sessionId) {
+        return (String) getSession(sessionId).get("ID");
+    }
 
     public static boolean isExist(String sessionId) {
         Object obj = sessions.get(sessionId);
