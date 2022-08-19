@@ -1,17 +1,19 @@
 package com.dataworld.service.db;
 
+import com.dataworld.service.user.Auth;
 import com.dataworld.service.user.User;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Getter
 public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
     // TODO List -> Map
-    private static ArrayList<User> users = new ArrayList<>();
+    private static ArrayList<User> users = new ArrayList<>(Arrays.asList(new User("ADMIN", "1234",Auth.ADMIN)));
 
     public Users(){ }
 
