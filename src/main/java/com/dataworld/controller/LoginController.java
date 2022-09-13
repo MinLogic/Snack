@@ -16,7 +16,7 @@ public class LoginController extends AbstractController {
         if (loginUser != null) {
             if (loginUser.login(request.getParameter("PW"))) {
                 response.addHeader("Set-cookie", "logined=true; Path=/;");
-                response.addHeader("Set-cookie", "SESSIONID=ss; Path=/;");
+                response.addHeader("Set-cookie", "SESSION-ID=ss; Path=/;");
                 response.sendRedirect("/home.html");
                 return;
             }

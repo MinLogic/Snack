@@ -1,9 +1,6 @@
 package com.dataworld.webServer.server;
 
-import com.dataworld.controller.ApiUsersController;
-import com.dataworld.controller.Controller;
-import com.dataworld.controller.CreateUserController;
-import com.dataworld.controller.LoginController;
+import com.dataworld.controller.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +15,7 @@ public class RequestMapping {
         controllers.put("/product/regForm", new LoginController());
         controllers.put("/product", new LoginController());
         controllers.put("/api/users", (Controller) new ApiUsersController());
+        controllers.put("/home", new HomeController());
     }
 
     public static Controller getController(String requestUrl) {

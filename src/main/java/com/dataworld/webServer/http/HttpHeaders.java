@@ -14,6 +14,13 @@ public class HttpHeaders {
     void add(String header) {
         log.debug("header : {}", header);
         String[] splitHeaders = header.split(":");
+        //TODO 쿠키 파싱하는부분 수정필요
+        if ("Set-cookie".equals(splitHeaders[0])){
+            String[] cookie = splitHeaders[1].trim()
+                    .split("=");
+            headers.put(cookie[0], cookie[1]);
+            return;
+        }
         headers.put(splitHeaders[0], splitHeaders[1].trim());
     }
 
