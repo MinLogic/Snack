@@ -26,7 +26,6 @@ public class WebServer {
             while((connection = listenSocket.accept()) != null){
                 RequestHandler requestHandler = new RequestHandler(connection);
                 requestHandler.start();
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

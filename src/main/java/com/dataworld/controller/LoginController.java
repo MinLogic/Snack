@@ -4,6 +4,7 @@ import com.dataworld.service.db.Users;
 import com.dataworld.webServer.http.HttpRequest;
 import com.dataworld.webServer.http.HttpResponse;
 import com.dataworld.service.user.User;
+import com.dataworld.webServer.http.HttpSession;
 
 public class LoginController extends AbstractController {
 
@@ -15,8 +16,8 @@ public class LoginController extends AbstractController {
 
         if (loginUser != null) {
             if (loginUser.login(request.getParameter("PW"))) {
-                response.addHeader("Set-cookie", "logined=true; Path=/;");
-                response.addHeader("Set-cookie", "SESSION-ID=ss; Path=/;");
+                String sessionId = HttpSession.makeNewSession(loginUser);
+                response.addHeader("Set-cookie", "SESSION-ID=" + sessionId + "; Path=/;");
                 response.sendRedirect("/home.html");
                 return;
             }
@@ -26,8 +27,13 @@ public class LoginController extends AbstractController {
 
     @Override
     public void doGet(HttpRequest request, HttpResponse response) {
-        //TODO cookie sessionID 확인
+        String sessionId = request.getHeader("SESSION-ID");
         String path = request.getPath();
         response.forward("./src/main/webapp" + path + ".html");
+
+        if (sessionId == null) {
+            return;
+        }
+        response.sendRedirect("/home.html");
     }
 }

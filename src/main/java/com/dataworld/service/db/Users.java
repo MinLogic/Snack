@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class Users {
     private static final Logger log = LoggerFactory.getLogger(Users.class);
     // TODO List -> Map
-    private static ArrayList<User> users = new ArrayList<>(Arrays.asList(new User("ADMIN", "1234",Auth.ADMIN)));
+    private static ArrayList<User> users = new ArrayList<>(Arrays.asList(new User("ADMIN", "1234", Auth.ADMIN)));
 
     public Users(){ }
 

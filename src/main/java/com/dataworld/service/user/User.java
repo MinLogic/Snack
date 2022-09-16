@@ -1,8 +1,5 @@
 package com.dataworld.service.user;
 
-import com.dataworld.service.db.Orders;
-import com.dataworld.service.db.Products;
-import com.dataworld.service.db.Users;
 import com.dataworld.service.product.Product;
 import com.dataworld.service.snackworld.Cart;
 import com.dataworld.service.snackworld.Standard;
