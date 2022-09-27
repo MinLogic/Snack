@@ -62,4 +62,9 @@ public class HttpRequest {
     public String getParameter(String name) {
         return requestParams.getParameter(name);
     }
+
+    public String getSession() {
+        return headers.getSession();
+    }
+
 }

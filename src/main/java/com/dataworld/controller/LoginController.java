@@ -18,7 +18,7 @@ public class LoginController extends AbstractController {
             if (loginUser.login(request.getParameter("PW"))) {
                 String sessionId = HttpSession.makeNewSession(loginUser);
                 response.addHeader("Set-cookie", "SESSION-ID=" + sessionId + "; Path=/;");
-                response.sendRedirect("/home.html");
+                response.sendRedirect("/home");
                 return;
             }
         }
@@ -29,11 +29,13 @@ public class LoginController extends AbstractController {
     public void doGet(HttpRequest request, HttpResponse response) {
         String sessionId = request.getHeader("SESSION-ID");
         String path = request.getPath();
-        response.forward("./src/main/webapp" + path + ".html");
+
 
         if (sessionId == null) {
+            response.forward("./src/main/webapp" + path + ".html");
             return;
         }
-        response.sendRedirect("/home.html");
+
+        response.sendRedirect("/home");
     }
 }

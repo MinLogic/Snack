@@ -33,11 +33,11 @@ public class HttpSession {
         return (Map<String, Object>) sessions.get(sessionId);
     }
 
-    public Auth getUserAuth(String sessionId) {
+    public static Auth getUserAuth(String sessionId) {
         return (Auth) getSession(sessionId).get("AUTH");
     }
 
-    public String getUserId(String sessionId) {
+    public static String getUserId(String sessionId) {
         return (String) getSession(sessionId).get("ID");
     }
 

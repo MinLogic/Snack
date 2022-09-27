@@ -18,6 +18,13 @@ public class RequestParams {
     }
 
     private void putParams(String data) {
+        log.debug("data : {}", data);
+
+        if (data == null || data.isEmpty()) {
+            return;
+        }
+
+        params.putAll(HttpRequestUtils.parseQueryString(data));
         log.debug("params : {}", params);
     }
 

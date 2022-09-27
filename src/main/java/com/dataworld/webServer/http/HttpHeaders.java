@@ -15,10 +15,10 @@ public class HttpHeaders {
         log.debug("header : {}", header);
         String[] splitHeaders = header.split(":");
 
-        if ("Set-cookie".equals(splitHeaders[0])){
-            String[] cookie = splitHeaders[1].split(" ")[0]
-                    .split("=");
-            headers.put(cookie[0], cookie[1].replaceAll("[^a-zA-Z0-9]", ""));
+        if ("Cookie".equals(splitHeaders[0])){
+            String[] cookie = splitHeaders[1].trim()
+                                             .split("=");
+            headers.put(cookie[0], cookie[1]);
             return;
         }
         headers.put(splitHeaders[0], splitHeaders[1].trim());
@@ -35,5 +35,9 @@ public class HttpHeaders {
 
     int getContentLength() {
         return getIntHeader(CONTENT_LENGTH);
+    }
+
+    String getSession(){
+        return headers.get("SESSION-ID");
     }
 }
